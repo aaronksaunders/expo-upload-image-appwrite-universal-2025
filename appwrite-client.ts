@@ -1,6 +1,7 @@
 import * as apw from "appwrite";
 import { Platform } from "react-native";
 import { Storage as aprnStorage } from "react-native-appwrite/src/services/storage";
+import { Account as aprnAccount } from "react-native-appwrite/src/services/account";
 import * as aprn from "react-native-appwrite/src";
 
 interface AppwriteConfig {
@@ -11,6 +12,7 @@ interface AppwriteConfig {
 
 interface AppwriteClient {
   storage: apw.Storage | aprnStorage;
+  account: apw.Account | aprnAccount;
 }
 
 /**
@@ -60,14 +62,20 @@ export class AppwriteClientFactory {
       if (Platform.OS === "web") {
         const client = new apw.Client();
         client.setEndpoint(config.endpoint).setProject(config.projectId);
-        this.instance = { storage: new apw.Storage(client) };
+        this.instance = {
+          storage: new apw.Storage(client),
+          account: new apw.Account(client),
+        };
       } else {
         const client = new aprn.Client();
         client
           .setEndpoint(config.endpoint)
           .setProject(config.projectId)
           .setPlatform(config.bundleId!);
-        this.instance = { storage: new aprnStorage(client) };
+        this.instance = {
+          storage: new aprnStorage(client),
+          account: new aprnAccount(client),
+        };
       }
     }
     return this.instance;
