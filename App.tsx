@@ -1,7 +1,17 @@
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
-import { Button, Platform, StyleSheet, Text, View } from "react-native";
+import {
+  Button,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import * as ImagePicker from "expo-image-picker";
+
+// tailwind
+import "./global.css";
 
 // Appwrite SDK
 import { ID } from "react-native-appwrite";
@@ -107,7 +117,12 @@ export default function App() {
     <View style={styles.container}>
       <Text>Open up App.tsx to start working on your app!</Text>
       <StatusBar style="auto" />
-      <Button onPress={pickImage} title="Pick an image from camera roll" />
+      <TouchableOpacity
+        className="bg-blue-500 hover:bg-blue-700 text-green-100 font-bold py-2 px-4 rounded"
+        onPress={pickImage}
+      >
+        <Text className="text-white">Pick an image</Text>
+      </TouchableOpacity>
     </View>
   );
 }
